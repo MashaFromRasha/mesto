@@ -1,0 +1,23 @@
+.photos__button-like {
+  position: absolute;
+  bottom: 30px;
+  left: 240px;
+  height: 19px;
+  width: 22px;
+  border: none;
+  padding: 0;
+  background-image: url(../../../images/photos/photos-button-like.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #FFF;
+  transition: opacity .3s ease;
+  cursor: pointer;
+}
+  
+.photos__button-like:hover {
+  opacity: 0.6;
+}
+  
+.photos__like-button:active {
+  background-image: url(../../../images/photos/photos-button-like-active.svg);
+}

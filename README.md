@@ -1,17 +1,24 @@
-# Проект: Место
+# Проектная работа: «Место»
 
-### Обзор
+## Описание
 
+Проектная работа подготовлена в рамках четвёртого спринта курса [Яндекс.Практикум](https://practicum.yandex.ru/) факультета [«Веб-разработчик».](https://practicum.yandex.ru/web/). В работе применены расширенные возможности HTML и CSS, JavaScript (работа с DOM), git.
+
+## Технологии
+* Grid Layout
+* Flexbox
+* Media queries
+* Позиционирование элементов
+* БЭМ-методология
+* Файловая структура БЭМ Nested
 * Figma
-* Картинки
+* JavaScript (DOM)
 
-**Figma**
+## Ссылка на проект
+[Github Pages](https://mashafromrasha.github.io/mesto/)
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+## Чеклист
+[Чеклист проектной работы](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-4.pdf)
 
-**Картинки**
-
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+## Демо
+![demo](./images/demo.jpg)

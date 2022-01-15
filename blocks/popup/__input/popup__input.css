@@ -1,0 +1,24 @@
+.popup__input {
+  width: 100%;
+  border: 0;
+  padding: 10px 0;
+  color: #000;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  border-bottom: 1px solid rgb(0, 0, 0, .2);
+  margin-bottom: 17px; /*т.к. в фигма некорректно отрисованы высоты строк (не сверху-снизу от текста, 
+  а вся высота строки сверху), то некоторые отступы (паддинг и марджин в этом селекторе)
+  были изменены разработчиком, чтобы вписываться в перфект-пиксель.
+  это сделано намеренно, чтобы совпадать с макетом и нивелировать проблемы высот строк*/
+}
+
+.popup__input:last-of-type {
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 720px) {
+  .popup__input:last-of-type {
+    margin-bottom: 45px;
+  }
+}
