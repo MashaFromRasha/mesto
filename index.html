@@ -14,65 +14,62 @@
     <img class="header__logo" src="./images/header-logo.svg" alt="лого сайта Mesto Russia">
   </header>
 
-  <main>
+  <main class="main">
     <section class="profile">
       <img src="./images/profile-avatar.jpg" alt="Фото аватара" class="profile__avatar">
       <div class="profile__text-block">
         <div class="profile__row-block">
           <h1 class="profile__author">Жак-Ив Кусто</h1>
-          <button class="profile__button-edit" type="button"></button>
+          <button class="profile__button-edit" type="button" aria-label="изменить"></button>
         </div>
         <p class="profile__status">Исследователь океана</p>
       </div>
-      <button class="profile__button-add" type="button"></button>
+      <button class="profile__button-add" type="button" aria-label="добавить"></button>
     </section>
 
     <section class="photos">
-      <ul class="photos__list">
-        <li class="photos__card">
-          <figure class="photos__figure">
-            <img src="./images/photos/mesto-photos-karachaevsk.jpg" alt="Шоанинский храм" class="photos__image">
-            <figcaption class="photos__figcaption">Карачаевск</figcaption>
-          </figure>
-          <button class="photos__button-like" aria-label="поставить лайк"></button>
-        </li>
-        <li class="photos__card">
-          <figure class="photos__figure">
-            <img src="./images/photos/mesto-photos-elbrus.jpg" alt="Вид на Эльбрус с Приэльбрусья" class="photos__image">
-            <figcaption class="photos__figcaption">Гора Эльбрус</figcaption>
-          </figure>
-          <button class="photos__button-like" aria-label="поставить лайк"></button>
-        </li>
-        <li class="photos__card">
-          <figure class="photos__figure">
-            <img src="./images/photos/mesto-photos-dombai.jpg" alt="Пик Инэ Домбай" class="photos__image">
-            <figcaption class="photos__figcaption">Домбай</figcaption>
-          </figure>
-          <button class="photos__button-like" aria-label="поставить лайк"></button>
-        </li>
-        <li class="photos__card">
-          <figure class="photos__figure">
-            <img src="./images/photos/mesto-photos-elbrus.jpg" alt="Вид на Эльбрус с Приэльбрусья" class="photos__image">
-            <figcaption class="photos__figcaption">Гора Эльбрус</figcaption>
-          </figure>
-          <button class="photos__button-like" aria-label="поставить лайк"></button>
-        </li>
-        <li class="photos__card">
-          <figure class="photos__figure">
-            <img src="./images/photos/mesto-photos-dombai.jpg" alt="Пик Инэ Домбай" class="photos__image">
-            <figcaption class="photos__figcaption">Домбай</figcaption>
-          </figure>
-          <button class="photos__button-like" aria-label="поставить лайк"></button>
-        </li>
-        <li class="photos__card">
-          <figure class="photos__figure">
-            <img src="./images/photos/mesto-photos-karachaevsk.jpg" alt="Шоанинский храм" class="photos__image">
-            <figcaption class="photos__figcaption">Карачаево-Черкесия</figcaption>
-          </figure>
-          <button class="photos__button-like" aria-label="поставить лайк"></button>
-        </li>
-      </ul>
-    </section>
+      <article class="card">
+        <img src="./images/photos/mesto-photos-karachaevsk.jpg" alt="Шоанинский храм" class="card__image">
+        <div class="card__row-block">
+          <h2 class="card__title">Карачаевск</h2>
+          <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        </div>
+      </article>
+      <article class="card">
+        <img src="./images/photos/mesto-photos-elbrus.jpg" alt="Вид на Эльбрус с Приэльбрусья" class="card__image">
+        <div class="card__row-block">
+          <h2 class="card__title">Гора Эльбрус</h2>
+          <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        </div>
+      </article>
+      <article class="card">
+        <img src="./images/photos/mesto-photos-dombai.jpg" alt="Пик Инэ Домбай" class="card__image">
+        <div class="card__row-block">
+          <h2 class="card__title">Домбай</h2>
+          <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        </div>
+      </article>
+      <article class="card">
+        <img src="./images/photos/mesto-photos-elbrus.jpg" alt="Вид на Эльбрус с Приэльбрусья" class="card__image">
+        <div class="card__row-block">
+          <h2 class="card__title">Гора Эльбрус</h2>
+          <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        </div>
+      </article>
+      <article class="card">
+        <img src="./images/photos/mesto-photos-dombai.jpg" alt="Пик Инэ Домбай" class="card__image">
+        <div class="card__row-block">
+          <h2 class="card__title">Домбай</h2>
+          <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        </div>
+      </article>
+      <article class="card">
+        <img src="./images/photos/mesto-photos-karachaevsk.jpg" alt="Шоанинский храм" class="card__image">
+        <div class="card__row-block">
+          <h2 class="card__title">Карачаево-Черкесия</h2>
+          <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        </div>
+      </article>
 
   </main>
 
@@ -80,19 +77,19 @@
     <p class="footer__copy">&copy; 2022 Mesto Russia</p>
   </footer>
 
-  <section class="popup">
+  <div class="popup">
     <div class="popup__container">
-      <button class="button popup__button-close" type="button"></button>
+      <button class="button popup__button-close" type="button" aria-label="закрыть"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup-form">
         <input class="popup__input popup__input_type_author" type="text" placeholder="Жак-Ив Кусто" 
-        name="popup-input-name">
+        name="popup-input-name" required>
         <input class="popup__input popup__input_type_status" type="text" placeholder="Исследователь океана" 
-        name="popup-input-status">
+        name="popup-input-status" required>
         <button class="button popup__button-submit" type="submit">Сохранить</button>
       </form>
     </div>
-  </section>
+  </div>
 
   <script src="./scripts/index.js"></script>
 

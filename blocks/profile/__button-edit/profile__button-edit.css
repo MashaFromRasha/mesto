@@ -2,7 +2,7 @@
   max-width: 24px;
   height: 24px;
   width: 100%;
-  background-color: #000;
+  background-color: transparent;
   padding: 0;
   margin: 6px 0 0;
   background-image: url('../../../images/button-edit.svg');
@@ -13,10 +13,11 @@
   transition: opacity .3s ease;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 1024px) {
   .profile__button-edit {
     width: 18px;
     height: 18px;
+    margin: 0;
   }
 }
 

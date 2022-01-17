@@ -12,8 +12,6 @@
   .popup__title {
     margin: 25px auto 68px;
     font-size: 18px;
-    line-height: 1.21;
     max-width: calc(100% - (22px * 2));
-    width: 100%;
   }
 }
