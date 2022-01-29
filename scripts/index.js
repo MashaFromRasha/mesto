@@ -22,7 +22,7 @@ const initialCards = [
   },
   {
     name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards1-compressed/baikal.jpg'
   }
 ];
 
@@ -30,7 +30,7 @@ const initialCards = [
 const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('#popup-profile');
 const popupAddCard = document.querySelector('#popup-add-card');
-const popupImage = document.querySelector('#popup-image');
+const popupOpenImage = document.querySelector('#popup-open-image');
 
 const profileEditButton = document.querySelector('.profile__button-edit');
 const profileAddButton = document.querySelector('.profile__button-add');
@@ -50,7 +50,6 @@ const photos = document.querySelector('.photos');
 // Функуция открытия Popup
 function showPopup(popup) {
   popup.classList.add('popup_opened');
-  // popup.removeEventListener('click', showPopup);
 }
 
 
@@ -60,13 +59,63 @@ function closePopup(popup) {
 }
 
 
-// Отслеживаем событие клика кнопки "редактировать профиль" (открытие popup) + добавление дефолтных значений
-profileEditButton.addEventListener('click', () => {
+//Функция создания карточки 
+function createCard(name, link) {
+  // Находим элемент в DOM и клонируем контент в теге
+  const card = document.querySelector(".cards-template").content.cloneNode(true);
 
-  popupNameField.value = profileTitle.textContent;
-  popupStatusField.value = profileSubtitle.textContent;
+  // находим элементы в DOM
+  const cardTitle = card.querySelector(".card__title");
+  const cardImage = card.querySelector(".card__image");
 
-  showPopup(popupProfile);
+  // Подставляем пришедшие значения в шаблон новой карточки
+  cardTitle.textContent = name;
+  cardImage.src = link;
+  cardImage.alt = 'Фотография местности ' + name;
+
+  // Отслеживаем событие клика кнопки Удаление
+  card.querySelector(".card__button-remove").addEventListener("click", evt => {
+    evt.target.closest(".card").remove();
+  });
+
+  // Отслеживаем событие клика кнопки Лайк
+  card.querySelector(".card__button-like").addEventListener('click', evt => {
+    evt.target.classList.toggle("card__button-like_active");
+  });
+
+  // Отслеживаем событие клика на картинку
+  card.querySelector(".card__image").addEventListener('click', evt => {
+    const popupImage = document.querySelector('.popup__image');
+    const popupCaption = document.querySelector('.popup__caption');
+
+    popupImage.src = evt.target.src;
+    popupImage.alt = name;
+    popupCaption.textContent = name;
+
+    showPopup(popupOpenImage);
+  });
+
+  return card; //возвращается созданная карточка 
+}
+
+
+// Функция добавления карточки в контейнер
+function addCard(container, element) {
+  container.prepend(element);
+}
+
+
+// Перебор элементов массива с функцией addCard
+initialCards.forEach(item => {
+  addCard(photos, createCard(item.name, item.link));
+});
+
+
+// Перебираем все popup, чтобы повесить обработчик на все кнопки закрытия (закрытие popup)
+popups.forEach(elem => {
+  elem.querySelector('.popup__button-close').addEventListener('click', () => {
+    closePopup(elem);
+  });
 });
 
 
@@ -86,62 +135,6 @@ profileAddButton.addEventListener('click', () => {
   showPopup(popupAddCard);
 });
 
-// Перебираем все popup, чтобы повесить обработчик на все кнопки закрытия (закрытие popup)
-popups.forEach(elem => {
-  elem.querySelector('.popup__button-close').addEventListener('click', () => {
-    closePopup(elem);
-  });
-});
-
-
-//Функция создания карточки 
-function createCard(name, link) {
-  // Находим элемент в DOM и клонируем контент в теге
-  const cards = document.querySelector(".cards-template").content.cloneNode(true);
-
-  // находим элементы в DOM
-  const cardTitle = cards.querySelector(".card__title");
-  const cardImage = cards.querySelector(".card__image");
-
-  // Подставляем пришедшие значения в шаблон новой карточки
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.alt = 'Фотография местности ' + name;
-
-  // Отслеживаем событие клика кнопки Удаление
-  cards.querySelector(".card__button-remove").addEventListener("click", evt => {
-    evt.target.closest(".card").remove();
-  });
-
-  // Отслеживаем событие клика кнопки Лайк
-  cards.querySelector(".card__button-like").addEventListener('click', evt => {
-    evt.target.classList.toggle("card__button-like_active");
-  });
-
-  // Отслеживаем событие клика на картинку
-  cards.querySelector(".card__image").addEventListener('click', evt => {
-
-    document.querySelector('.popup__image').src = evt.target.src;
-    document.querySelector('.popup__caption').textContent = name;
-
-    showPopup(popupImage);
-  });
-
-  return cards; //возвращается созданная карточка 
-}
-
-
-// Функция добавления карточки в контейнер
-function addCard(container, element) {
-  container.prepend(element);
-}
-
-  
-// Перебор элементов массива с функцией addCard
-initialCards.forEach(item => {
-  addCard(photos, createCard(item.name, item.link));
-});
-
 
 // Отслеживаем событие отправки формы "Новой карточки"
 popupFormAdd.addEventListener("submit", evt => {
@@ -154,4 +147,14 @@ popupFormAdd.addEventListener("submit", evt => {
 
   closePopup(popupAddCard); // закрываем форму
   popupFormAdd.reset(); // сбрасываем значения формы
+});
+
+
+// Отслеживаем событие клика кнопки "редактировать профиль" (открытие popup) + добавление дефолтных значений
+profileEditButton.addEventListener('click', () => {
+
+  popupNameField.value = profileTitle.textContent;
+  popupStatusField.value = profileSubtitle.textContent;
+
+  showPopup(popupProfile);
 });
