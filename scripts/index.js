@@ -1,44 +1,157 @@
-// Выбираем элементы блока Profile
-const profileEditButton = document.querySelector('.profile__button-edit'); // Выбираем кнопку редактирования
-const profileAuthor = document.querySelector('.profile__author');
-const profileStatus = document.querySelector('.profile__status');
+// массив из 6ти карточек 
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
-// Выбираем элементы Popup
-const popup = document.querySelector('.popup');
-const popupContent = popup.querySelector('.popup__container'); // Выбираем контейнер popup
-const popupCloseButton = popupContent.querySelector('.popup__button-close'); // Выбираем элементы контейнера popup и кнопку закрытия
-const popupForm = popupContent.querySelector('.popup__form'); // Выбираем форму и элементы формы
-const popupAuthorField = popupForm.querySelector('.popup__input_type_author');
-const popupStatusField = popupForm.querySelector('.popup__input_type_status');
-const popupSubmitButton = popupForm.querySelector('.popup__button-submit'); // Выбираем кнопу отправить 
+
+const popups = document.querySelectorAll('.popup');
+const popupProfile = document.querySelector('#popup-profile');
+const popupAddCard = document.querySelector('#popup-add-card');
+const popupImage = document.querySelector('#popup-image');
+
+const profileEditButton = document.querySelector('.profile__button-edit');
+const profileAddButton = document.querySelector('.profile__button-add');
+const profileTitle = document.querySelector('.profile__author');
+const profileSubtitle = document.querySelector('.profile__status');
 
 
+const popupFormEdit = document.querySelector('#popup-form-edit');
+const popupFormAdd = document.querySelector('#popup-form-add');
 
-// Функуция открытия Popup:
-function showPopup() {
+const popupNameField = document.querySelector('.popup__input_type_author');
+const popupStatusField = document.querySelector('.popup__input_type_status');
+
+const photos = document.querySelector('.photos');
+
+
+// Функуция открытия Popup
+function showPopup(popup) {
   popup.classList.add('popup_opened');
-
-  // Привязываем стартовое значение в Popap поля
-  popupAuthorField.value = profileAuthor.textContent;
-  popupStatusField.value = profileStatus.textContent;
+  // popup.removeEventListener('click', showPopup);
 }
 
-// Функция закрытия Popup:
-function closePopup() {
+
+// Функция закрытия Popup
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-// Функция Обработчик «отправки» формы:
-function formSubmitHandler(evt) {
+
+// Отслеживаем событие клика кнопки "редактировать профиль" (открытие popup) + добавление дефолтных значений
+profileEditButton.addEventListener('click', () => {
+
+  popupNameField.value = profileTitle.textContent;
+  popupStatusField.value = profileSubtitle.textContent;
+
+  showPopup(popupProfile);
+});
+
+
+// Отслеживаем событие отправки формы "Редактирования Profile" и отправляем полученые значения + закрытие popup
+popupFormEdit.addEventListener("submit", evt => {
   evt.preventDefault();
 
-  // Отправляем значения строк формы на страницу
-  profileAuthor.textContent = popupAuthorField.value;
-  profileStatus.textContent = popupStatusField.value;
+  profileTitle.textContent = popupNameField.value;
+  profileSubtitle.textContent = popupStatusField.value;
 
-  closePopup();
+  closePopup(popupProfile);
+});
+
+
+// Отслеживаем событие клика кнопки "добавить карточку" (открытие popup)
+profileAddButton.addEventListener('click', () => {
+  showPopup(popupAddCard);
+});
+
+// Перебираем все popup, чтобы повесить обработчик на все кнопки закрытия (закрытие popup)
+popups.forEach(elem => {
+  elem.querySelector('.popup__button-close').addEventListener('click', () => {
+    closePopup(elem);
+  });
+});
+
+
+//Функция создания карточки 
+function createCard(name, link) {
+  // Находим элемент в DOM и клонируем контент в теге
+  const cards = document.querySelector(".cards-template").content.cloneNode(true);
+
+  // находим элементы в DOM
+  const cardTitle = cards.querySelector(".card__title");
+  const cardImage = cards.querySelector(".card__image");
+
+  // Подставляем пришедшие значения в шаблон новой карточки
+  cardTitle.textContent = name;
+  cardImage.src = link;
+  cardImage.alt = 'Фотография местности ' + name;
+
+  // Отслеживаем событие клика кнопки Удаление
+  cards.querySelector(".card__button-remove").addEventListener("click", evt => {
+    evt.target.closest(".card").remove();
+  });
+
+  // Отслеживаем событие клика кнопки Лайк
+  cards.querySelector(".card__button-like").addEventListener('click', evt => {
+    evt.target.classList.toggle("card__button-like_active");
+  });
+
+  // Отслеживаем событие клика на картинку
+  cards.querySelector(".card__image").addEventListener('click', evt => {
+
+    document.querySelector('.popup__image').src = evt.target.src;
+    document.querySelector('.popup__caption').textContent = name;
+
+    showPopup(popupImage);
+  });
+
+  return cards; //возвращается созданная карточка 
 }
 
-profileEditButton.addEventListener('click', showPopup); // Отслеживаем событие клика кнопки "редактировать" 
-popupCloseButton.addEventListener('click', closePopup); // Отслеживаем событие клика кнопки "закрыть" 
-popupForm.addEventListener('submit', formSubmitHandler); // Отслеживаем событие клика кнопки "отправить"
+
+// Функция добавления карточки в контейнер
+function addCard(container, element) {
+  container.prepend(element);
+}
+
+  
+// Перебор элементов массива с функцией addCard
+initialCards.forEach(item => {
+  addCard(photos, createCard(item.name, item.link));
+});
+
+
+// Отслеживаем событие отправки формы "Новой карточки"
+popupFormAdd.addEventListener("submit", evt => {
+  evt.preventDefault();
+
+  const newNameCard = popupFormAdd.querySelector('.popup__input_type_place-name').value; // Значения полей формы 
+  const newLinkCard = popupFormAdd.querySelector('.popup__input_type_photo').value;
+
+  addCard(photos, createCard(newNameCard, newLinkCard)); // Добавляем новую карточку
+
+  closePopup(popupAddCard); // закрываем форму
+  popupFormAdd.reset(); // сбрасываем значения формы
+});
