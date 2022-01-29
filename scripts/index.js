@@ -22,7 +22,7 @@ const initialCards = [
   },
   {
     name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards1-compressed/baikal.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 
@@ -74,7 +74,7 @@ function createCard(name, link) {
   cardImage.alt = 'Фотография местности ' + name;
 
   // Отслеживаем событие клика кнопки Удаление
-  card.querySelector(".card__button-remove").addEventListener("click", evt => {
+  card.querySelector(".card__button-remove").addEventListener('click', evt => {
     evt.target.closest(".card").remove();
   });
 
@@ -84,12 +84,12 @@ function createCard(name, link) {
   });
 
   // Отслеживаем событие клика на картинку
-  card.querySelector(".card__image").addEventListener('click', evt => {
+  cardImage.addEventListener('click', evt => {
     const popupImage = document.querySelector('.popup__image');
     const popupCaption = document.querySelector('.popup__caption');
 
-    popupImage.src = evt.target.src;
-    popupImage.alt = name;
+    popupImage.src = evt.target.src; 
+    popupImage.alt = name; 
     popupCaption.textContent = name;
 
     showPopup(popupOpenImage);
@@ -105,17 +105,20 @@ function addCard(container, element) {
 }
 
 
-// Перебор элементов массива с функцией addCard
-initialCards.forEach(item => {
-  addCard(photos, createCard(item.name, item.link));
-});
-
-
 // Перебираем все popup, чтобы повесить обработчик на все кнопки закрытия (закрытие popup)
 popups.forEach(elem => {
   elem.querySelector('.popup__button-close').addEventListener('click', () => {
     closePopup(elem);
   });
+});
+
+// Отслеживаем событие клика кнопки "редактировать профиль" (открытие popup) + добавление дефолтных значений
+profileEditButton.addEventListener('click', () => {
+
+  popupNameField.value = profileTitle.textContent;
+  popupStatusField.value = profileSubtitle.textContent;
+
+  showPopup(popupProfile);
 });
 
 
@@ -150,11 +153,7 @@ popupFormAdd.addEventListener("submit", evt => {
 });
 
 
-// Отслеживаем событие клика кнопки "редактировать профиль" (открытие popup) + добавление дефолтных значений
-profileEditButton.addEventListener('click', () => {
-
-  popupNameField.value = profileTitle.textContent;
-  popupStatusField.value = profileSubtitle.textContent;
-
-  showPopup(popupProfile);
+// Перебор элементов массива с функцией addCard
+initialCards.forEach(item => {
+  addCard(photos, createCard(item.name, item.link));
 });
