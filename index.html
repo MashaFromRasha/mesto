@@ -46,9 +46,11 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup-form" id="popup-form-edit">
         <input class="popup__input popup__input_type_author" type="text" placeholder="Имя"
-          name="popup-input-name" required>
+          name="popup-input-name" minlength="2" maxlength="40" required>
+        <span class="popup__error" id="popup-input-name-error"></span>
         <input class="popup__input popup__input_type_status" type="text" placeholder="Профессиональная деятельность"
-          name="popup-input-status" required>
+          name="popup-input-status" minlength="2" maxlength="200" required>
+          <span class="popup__error" id="popup-input-status-error"></span>
         <button class="popup__button-submit" type="submit">Сохранить</button>
       </form>
     </div>
@@ -61,9 +63,11 @@
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="popup-form" id="popup-form-add">
         <input class="popup__input popup__input_type_place-name" type="text" placeholder="Название"
-          name="popup-input-name" required>
+          name="popup-input-place-name" minlength="2" maxlength="30" required>
+          <span class="popup__error" id="popup-input-place-name-error"></span>
         <input class="popup__input popup__input_type_photo" type="url" placeholder="Ссылка на фото"
-          name="popup-input-status" required>
+          name="popup-input-url" required>
+        <span class="popup__error" id="popup-input-url-error"></span>
         <button class="button popup__button-submit" type="submit">Создать</button>
       </form>
     </div>
@@ -91,6 +95,7 @@
   </template>
 
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 
 </body>
 

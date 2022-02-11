@@ -47,8 +47,18 @@ const popupStatusField = document.querySelector('.popup__input_type_status');
 const photos = document.querySelector('.photos');
 
 
+// Функция нажатия на esc:
+function pressEscape(evt) {
+  const popupIsOpen = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(popupIsOpen);
+  }
+}
+
+
 // Функуция открытия Popup
 function showPopup(popup) {
+  document.addEventListener('keydown', pressEscape);
   popup.classList.add('popup_opened');
 }
 
@@ -56,6 +66,7 @@ function showPopup(popup) {
 // Функция закрытия Popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', pressEscape);
 }
 
 
@@ -85,8 +96,8 @@ function createCard(name, link) {
 
   // Отслеживаем событие клика на картинку
   cardImage.addEventListener('click', evt => {
-    const popupImage = document.querySelector('.popup__image');
-    const popupCaption = document.querySelector('.popup__caption');
+    const popupImage = popupOpenImage.querySelector('.popup__image');
+    const popupCaption = popupOpenImage.querySelector('.popup__caption');
 
     popupImage.src = evt.target.src; 
     popupImage.alt = name; 
@@ -105,10 +116,12 @@ function addCard(container, element) {
 }
 
 
-// Перебираем все popup, чтобы повесить обработчик на все кнопки закрытия (закрытие popup)
-popups.forEach(elem => {
-  elem.querySelector('.popup__button-close').addEventListener('click', () => {
-    closePopup(elem);
+// Перебираем все popup, чтобы повесить обработчик на все кнопки закрытия, и клики вне popup (закрытие popup)
+popups.forEach(popup => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup__button-close') || evt.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
   });
 });
 
