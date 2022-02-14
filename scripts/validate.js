@@ -49,7 +49,7 @@ function setEventListeners(formElement, selectors) {
   inputsList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, selectors); // проверям валидность формы
-      toggleButtonState(submitButton, formElement.checkValidity(), selectors); // проверяем состояние кнопки
+      toggleButtonState(submitButton, formElement.checkValidity(), selectors); // проверяем состояние кнопки после импута
     });
   });
 }
@@ -65,6 +65,9 @@ function enableValidation(selectors) {
     // Вешаем слушатель на событие отправки формы
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault(); // убираем дефолтное поведение кнопки "отправить форму"
+
+      const submitButton = formElement.querySelector(selectors.submitButtonSelector); // выбираем в DOM кнопку формы
+      toggleButtonState(submitButton, formElement.checkValidity(), selectors); // проверяем состояние кнопки после отправки формы
     }); 
   });
 }
