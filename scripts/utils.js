@@ -1,5 +1,5 @@
 // массив из 6ти карточек 
-const initialCards = [
+export const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -26,13 +26,10 @@ const initialCards = [
   }
 ];
 
-export {initialCards};
-
 
 const popupOpenImage = document.querySelector('#popup-open-image');
 const popupElemImg = document.querySelector('.popup__image');
 const popupElemCaption = document.querySelector('.popup__caption');
-
 
 
 // Функция клика на фото (открытие попапа)
