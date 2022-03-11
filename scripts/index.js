@@ -1,4 +1,6 @@
 import {initialCards} from './utils.js';
+import { showPopup } from './utils.js';
+import { closePopup } from './utils.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
@@ -6,9 +8,9 @@ import FormValidator from './FormValidator.js';
 const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('#popup-profile');
 const popupAddCard = document.querySelector('#popup-add-card');
-const popupOpenImage = document.querySelector('#popup-open-image');
-const popupElemImg = document.querySelector('.popup__image');
-const popupElemCaption = document.querySelector('.popup__caption');
+// const popupOpenImage = document.querySelector('#popup-open-image');
+// const popupElemImg = document.querySelector('.popup__image');
+// const popupElemCaption = document.querySelector('.popup__caption');
 
 const profileEditButton = document.querySelector('.profile__button-edit');
 const profileAddButton = document.querySelector('.profile__button-add');
@@ -33,38 +35,38 @@ const validationConfig = {
 };
 
  
-// Функция нажатия на ESC
-function pressingEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
-}
+// // Функция нажатия на ESC
+// function pressingEscape(evt) {
+//   if (evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopup(openedPopup);
+//   }
+// }
 
 
-// Функция клика на фото (открытие попапа)
-export function handleImageClick(name, link) {
-  popupElemImg.src = link;
-  popupElemCaption.textContent = name;
+// // Функция клика на фото (открытие попапа)
+// export function handleImageClick(name, link) {
+//   popupElemImg.src = link;
+//   popupElemCaption.textContent = name;
  
-  showPopup(popupOpenImage);
-}
+//   showPopup(popupOpenImage);
+// }
 
 
-// Функуция открытия Popup
-function showPopup(popup) {
-  document.addEventListener('keydown', pressingEscape);
+// // Функуция открытия Popup
+// function showPopup(popup) {
+//   document.addEventListener('keydown', pressingEscape);
  
-  popup.classList.add('popup_opened');
-}
+//   popup.classList.add('popup_opened');
+// }
 
 
-// Функция закрытия Popup
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+// // Функция закрытия Popup
+// function closePopup(popup) {
+//   popup.classList.remove('popup_opened');
  
-  document.removeEventListener('keydown', pressingEscape);
-}
+//   document.removeEventListener('keydown', pressingEscape);
+// }
 
 
 // Функция создает и возвращает карточку

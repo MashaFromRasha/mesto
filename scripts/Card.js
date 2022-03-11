@@ -1,4 +1,4 @@
-import { handleImageClick } from './index.js';
+import { handleImageClick } from './utils.js';
 
 
 export default class Card {

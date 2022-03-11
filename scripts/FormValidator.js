@@ -1,7 +1,11 @@
+
+
 export default class FormValidator {
   constructor(settings, form) {
     this._settings = settings;
     this._form = form;
+    this._inputsList = this._form.querySelectorAll(this._settings.inputSelector); // Ищем в DOM все поля ввода
+    this._submitButton = this._form.querySelector(this._settings.submitButtonSelector); // Выбираем в DOM кнопку формы
   }
 
 
@@ -65,8 +69,7 @@ export default class FormValidator {
   
   // Публичный метод запуска валидации
   enableValidation () {
-    this._inputsList = this._form.querySelectorAll(this._settings.inputSelector); // Ищем в DOM все поля ввода
-    this._submitButton = this._form.querySelector(this._settings.submitButtonSelector); // Выбираем в DOM кнопку формы
+
     this._setEventListeners(this._form, this._settings, this._submitButton);
   
     // Вешаем слушатель на событие отправки формы
