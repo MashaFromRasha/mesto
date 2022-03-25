@@ -13,6 +13,7 @@
 * Файловая структура БЭМ Nested
 * Figma
 * Git
+* Webpack
 * JavaScript (OOP, DOM)
 * Валидация форм на стороне клиента
 
@@ -20,7 +21,7 @@
 [Github Pages](https://mashafromrasha.github.io/mesto/)
 
 ## Чеклист
-[Чеклист проектной работы](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-7.pdf)
+[Чеклист проектной работы](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-8.pdf)
 
 ## Демо
 ![demo](./images/demo.jpg)

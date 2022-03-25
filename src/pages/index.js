@@ -1,3 +1,4 @@
+import './index.css';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -43,7 +44,7 @@ const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
     const cardElement = creatureCard(item).generateCard();
-    cardsList.setItem(cardElement);
+    cardsList.addItem(cardElement);
   },
 },
   photos
@@ -55,7 +56,7 @@ const formAddCard = new PopupWithForm({
     formData['name'] = formData['popup-input-place-name'];
     formData['link'] = formData['popup-input-url'];
     const cardElement = creatureCard(formData).generateCard();
-    cardsList.setItem(cardElement);
+    cardsList.addItem(cardElement);
   },
   container: popupAddCard
 });
