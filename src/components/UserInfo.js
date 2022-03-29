@@ -1,20 +1,20 @@
 export default class UserInfo {
-  constructor({ titleContainer, subTitleContainer }) {
-    this._titleContainer = titleContainer;
-    this._subTitleContainer = subTitleContainer;
+  constructor(titleSelector, subTitleSelector) {
+    this._userName = document.querySelector(titleSelector);
+    this._userStatus = document.querySelector(subTitleSelector);
   }
   
   // Метод вернет объект с информацией со страницы о пользователе
   getUserInfo() {
-    this._profileValues = {};
-    this._profileValues.title = this._titleContainer.textContent;
-    this._profileValues.subtitle = this._subTitleContainer.textContent;
-    return this._profileValues;
+    return {
+      name: this._userName.textContent,
+      status: this._userStatus.textContent
+    };
   }
   
   // Метод берет нужные данные из массива данных и выводит на страницу
-  setUserInfo(formData) {
-    this._titleContainer.textContent = formData['popup-input-name'];
-    this._subTitleContainer.textContent = formData['popup-input-status'];
+  setUserInfo({name, status}) {
+    this._userName.textContent = name;
+    this._userStatus.textContent = status;
   }
 }

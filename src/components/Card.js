@@ -33,7 +33,7 @@ export default class Card {
     this._placeButtonRemove.addEventListener('click', this._deleteClickHandler);
     this._placeButtonLike.addEventListener('click', this._likeClickHandler);
     this._elementImage.addEventListener('click', () => {
-      this._handleCardClick(this._name, this._link)
+      this._handleCardClick(this._name, this._link);
     });
   };
 

@@ -3,7 +3,7 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-// import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import {
   initialCards,
@@ -25,7 +25,14 @@ import {
 
 // Экземпляр формы с картинкой и тектом
 const popupImage = new PopupWithImage('.popup_blackout');
+popupImage.setEventListeners();
 
+// const popupProfile1 = new PopupWithForm('.popup-add-card', handleProfileSubmit);
+// popupProfile1.setEventListeners();
+// const popupAddCard1 = new PopupWithForm('.popup_name_card', handleCardSubmit);
+// popupAddCard1.setEventListeners();
+
+// const userInfo = new UserInfo('.profile__author', '.profile__status');
 
 
 // Функция, создающая экземпляр класса Card
@@ -52,6 +59,16 @@ const cardsList = new Section({
   '.photos'
 );
 
+function handleProfileSubmit(data) {
+  userElem.setUserInfo(data);
+  popupProfile.close();
+}
+
+function handleCardSubmit(data) {
+  addCard( createCard(data) );
+  popupCard.close();
+}
+
 // // Константа, содержащая в себе карточку с данными из формы
 // const formAddCard = new PopupWithForm({
 //   submitForm: (formData) => {
@@ -64,11 +81,11 @@ const cardsList = new Section({
 //   // container: '#popup-add-card'
 // });
 
-// Экземпляр класса с информацией юзера
-const userInfo = new UserInfo({
-  titleContainer: profileTitle,
-  subTitleContainer: profileSubtitle
-});
+// // Экземпляр класса с информацией юзера
+// const userInfo = new UserInfo({
+//   titleContainer: profileTitle,
+//   subTitleContainer: profileSubtitle
+// });
 
 // // Экземпляр класса с формой для информации о юзере
 // const formProfile = new PopupWithForm({
@@ -90,9 +107,9 @@ const addPupupValidator = new FormValidator(validationConfig, popupFormAdd);
 addPupupValidator.enableValidation();
 
 // Слушатели событий для форм, попапа картинки
-popupImage.setEventListeners();
-formProfile.setEventListeners();
-formAddCard.setEventListeners();
+// popupImage.setEventListeners();
+// formProfile.setEventListeners();
+// formAddCard.setEventListeners();
 
 // Отслеживаем событие клика кнопки "редактировать" 
 profileEditButton.addEventListener('click', () => {
