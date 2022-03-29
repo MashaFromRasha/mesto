@@ -1,36 +1,43 @@
+// Условия открытия и закрытия попапов
 export default class Popup {
-  constructor(container) {
-    this._container = container;
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+    this._buttonClose = this._popup.querySelector('.popup__button-close');
+
+    this._boundHandleButtonClose = this._handleButtonClose.bind(this);
+    this._boundHandleOverlayClose = this._handleOverlayClose.bind(this);
+    this._boundHandleEscClose = this._handleEscClose.bind(this);
   }
-  
-  // Метод открытия попапа
+
   open() {
-    this._container.classList.add('popup_opened');
-    document.addEventListener('keydown', this._pressingEscape);
+    this.setEventListeners();
+    this._popup.classList.add('popup_opened');
   }
-  
-  // Метод закрытия попапа
+
   close() {
-    this._container.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._pressingEscape);
+    this._popup.classList.remove('popup_opened');
   }
-  
-  // Метод закрытия попапа при нажатии на esc
-  _pressingEscape = (evt) => {
+
+  _handleButtonClose() {
+    this.close();
+  }
+
+  _handleOverlayClose(evt) {
+    if (evt.target === evt.currentTarget) {
+      this.close();
+    }
+  }
+
+  _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      this.close(this._container);
+      this.close();
     }
   }
-  
-  // Метод закрытия попап по клику по фону и кнопке закрытия
-  _handleClickContainer = (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__button-close')) {
-      this.close(this._container);
-    }
-  };
-  
-  // Метод, добавляющий слушатели событий
+
   setEventListeners() {
-    this._container.addEventListener('click', this._handleClickContainer);
+    this._buttonClose.addEventListener('click', this._boundHandleButtonClose);
+    this._popup.addEventListener('click', this._boundHandleOverlayClose);
+    document.addEventListener('keydown', this._boundHandleEscClose);
   }
+
 }

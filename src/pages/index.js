@@ -3,7 +3,7 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
+// import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import {
   initialCards,
@@ -24,7 +24,8 @@ import {
 
 
 // Экземпляр формы с картинкой и тектом
-const popupImage = new PopupWithImage(popupOpenImage);
+const popupImage = new PopupWithImage('.popup_blackout');
+
 
 
 // Функция, создающая экземпляр класса Card
@@ -47,19 +48,21 @@ const cardsList = new Section({
     cardsList.addItem(cardElement);
   },
 },
-  photos
+  // photos
+  '.photos'
 );
 
-// Константа, содержащая в себе карточку с данными из формы
-const formAddCard = new PopupWithForm({
-  submitForm: (formData) => {
-    formData['name'] = formData['popup-input-place-name'];
-    formData['link'] = formData['popup-input-url'];
-    const cardElement = creatureCard(formData).generateCard();
-    cardsList.addItem(cardElement);
-  },
-  container: popupAddCard
-});
+// // Константа, содержащая в себе карточку с данными из формы
+// const formAddCard = new PopupWithForm({
+//   submitForm: (formData) => {
+//     formData['name'] = formData['popup-input-place-name'];
+//     formData['link'] = formData['popup-input-url'];
+//     const cardElement = creatureCard(formData).generateCard();
+//     cardsList.addItem(cardElement);
+//   },
+//   container: popupAddCard
+//   // container: '#popup-add-card'
+// });
 
 // Экземпляр класса с информацией юзера
 const userInfo = new UserInfo({
@@ -67,13 +70,13 @@ const userInfo = new UserInfo({
   subTitleContainer: profileSubtitle
 });
 
-// Экземпляр класса с формой для информации о юзере
-const formProfile = new PopupWithForm({
-  submitForm: (formData) => {
-    userInfo.setUserInfo(formData);
-  },
-  container: popupProfile
-});
+// // Экземпляр класса с формой для информации о юзере
+// const formProfile = new PopupWithForm({
+//   submitForm: (formData) => {
+//     userInfo.setUserInfo(formData);
+//   },
+//   container: popupProfile
+// });
 
 // Отрисовка карточек
 cardsList.renderItems();

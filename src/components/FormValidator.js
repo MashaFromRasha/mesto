@@ -74,7 +74,6 @@ export default class FormValidator {
   
     // Вешаем слушатель на событие отправки формы
     this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault(); // убираем дефолтное поведение кнопки "Отправить форму"
       this._disabledButton(this._submitButton, this._settings);
     });
 
