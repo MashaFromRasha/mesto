@@ -22,19 +22,6 @@ import {
   photos
 } from '../utils/constants.js';
 
-
-// Экземпляр формы с картинкой и тектом
-const popupImage = new PopupWithImage('.popup_blackout');
-popupImage.setEventListeners();
-
-// const popupProfile1 = new PopupWithForm('.popup-add-card', handleProfileSubmit);
-// popupProfile1.setEventListeners();
-// const popupAddCard1 = new PopupWithForm('.popup_name_card', handleCardSubmit);
-// popupAddCard1.setEventListeners();
-
-// const userInfo = new UserInfo('.profile__author', '.profile__status');
-
-
 // Функция, создающая экземпляр класса Card
 function creatureCard(item) {
   const card = new Card({
@@ -49,51 +36,58 @@ function creatureCard(item) {
 
 // Константа, содержащая в себе все карточки
 const cardsList = new Section({
-  items: initialCards,
+  data: initialCards,
   renderer: (item) => {
     const cardElement = creatureCard(item).generateCard();
     cardsList.addItem(cardElement);
   },
 },
-  // photos
   '.photos'
 );
 
+// Экземпляр формы с картинкой и тектом
+const popupImage = new PopupWithImage('.popup_blackout');
+popupImage.setEventListeners();
+
+const userElement = new UserInfo('.profile__author', '.profile__status');
+
+const popupProfile1 = new PopupWithForm('.popup-profile', handleProfileSubmit);
+popupProfile1.setEventListeners();
+
+function openProfilePopup() { //отрабатывает корректно, заносит данные из html в попап, открывает заполненный попап
+  const userInfo = userElement.getUserInfo();
+  popupNameField.value = userInfo.name;
+  popupStatusField.value = userInfo.status;
+
+  popupProfile1.open();
+}
+
 function handleProfileSubmit(data) {
-  userElem.setUserInfo(data);
-  popupProfile.close();
+  userElement.setUserInfo(data);
+  popupProfile1.close();
 }
 
-function handleCardSubmit(data) {
-  addCard( createCard(data) );
-  popupCard.close();
-}
 
-// // Константа, содержащая в себе карточку с данными из формы
-// const formAddCard = new PopupWithForm({
-//   submitForm: (formData) => {
-//     formData['name'] = formData['popup-input-place-name'];
-//     formData['link'] = formData['popup-input-url'];
-//     const cardElement = creatureCard(formData).generateCard();
-//     cardsList.addItem(cardElement);
-//   },
-//   container: popupAddCard
-//   // container: '#popup-add-card'
-// });
+// /* обработчик для редактирования */
+// function handleProfileSubmit(evt, items) {
+//   evt.preventDefault();
+//   userElement.setUserInfo(items);
+//   popupProfile1.close();
+// }
+// не включать111 function handleProfileSubmit(items) {
+//   userElement.setUserInfo(items);
+//   popupProfile1.close();
+// }
 
-// // Экземпляр класса с информацией юзера
-// const userInfo = new UserInfo({
-//   titleContainer: profileTitle,
-//   subTitleContainer: profileSubtitle
-// });
 
-// // Экземпляр класса с формой для информации о юзере
-// const formProfile = new PopupWithForm({
-//   submitForm: (formData) => {
-//     userInfo.setUserInfo(formData);
-//   },
-//   container: popupProfile
-// });
+// Слушатель клика на кнопку отктятия редактирования профиля
+profileEditButton.addEventListener('click', openProfilePopup);
+
+
+
+// const popupAddCard1 = new PopupWithForm('.popup_name_card', handleCardSubmit);
+// popupAddCard1.setEventListeners();
+
 
 // Отрисовка карточек
 cardsList.renderItems();
@@ -106,20 +100,5 @@ editPupupValidator.enableValidation();
 const addPupupValidator = new FormValidator(validationConfig, popupFormAdd);
 addPupupValidator.enableValidation();
 
-// Слушатели событий для форм, попапа картинки
-// popupImage.setEventListeners();
-// formProfile.setEventListeners();
-// formAddCard.setEventListeners();
 
-// Отслеживаем событие клика кнопки "редактировать" 
-profileEditButton.addEventListener('click', () => {
-  const dataUserInfo = userInfo.getUserInfo();
-  popupNameField.value = dataUserInfo.title;
-  popupStatusField.value = dataUserInfo.subtitle;
-  formProfile.open();
-});
 
-// Отслеживаем событие клика кнопки "добавить карточку" 
-profileAddButton.addEventListener('click', () => {
-  formAddCard.open();
-});
