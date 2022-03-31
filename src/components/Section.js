@@ -1,10 +1,11 @@
+
 // Класс Section отвечает за отрисовку элементов на странице
 
 export default class Section {
-  constructor({ data, renderer }, container) {
-    this._renderedItems = data;
+  constructor({ items, renderer }, container) {
+    this._renderedItems = items;
     this._renderer = renderer;
-    this._container = document.querySelector(container);
+    this._container = container;
   }
   
   // Метод отвечает за отрисовку всех элементов

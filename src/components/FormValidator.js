@@ -1,5 +1,3 @@
-
-
 export default class FormValidator {
   constructor(settings, form) {
     this._settings = settings;
@@ -11,15 +9,15 @@ export default class FormValidator {
 
   // Метод показа ошибки
   _showError (form, input) {
-    const error = form.querySelector(`#${input.name}-error`); // Ищем в DOM поле ошибки по Name
+    const error = form.querySelector(`.${input.id}-error`); // Ищем в DOM поле ошибки по Name
     error.textContent = input.validationMessage; // Текст ошибки равен дефолтному значению ошибок браузера
     input.classList.add(this._settings.inputInvalidClass); // Добавляем класс невалидного инпута
   }
 
 
-  // Мктод, убирающий показ ошибки
+  // Метод, убирающий показ ошибки
   _hideError (form, input) {
-    const error = form.querySelector(`#${input.name}-error`); // Ищем в DOM поле ошибки по Name
+    const error = form.querySelector(`.${input.id}-error`); // Ищем в DOM поле ошибки по Name
     error.textContent = ''; // Убираем текст ошибки
     input.classList.remove(this._settings.inputInvalidClass); // Удаляем класс невалидного инпута
   }
@@ -80,3 +78,4 @@ export default class FormValidator {
     this._setButtonState(this._submitButton, this._form.checkValidity(), this._settings); // Определяем стартовое состояние кнопки
   }
 }
+

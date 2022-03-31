@@ -1,43 +1,38 @@
-// Условия открытия и закрытия попапов
 export default class Popup {
-  constructor(popupSelector) {
-    this._popup = document.querySelector(popupSelector);
-    this._buttonClose = this._popup.querySelector('.popup__button-close');
-
-    this._boundHandleButtonClose = this._handleButtonClose.bind(this);
-    this._boundHandleOverlayClose = this._handleOverlayClose.bind(this);
-    this._boundHandleEscClose = this._handleEscClose.bind(this);
+  constructor (popupSelector) {
+  this._popup = document.querySelector(popupSelector);
+  this._pressingEscape = this._pressingEscape.bind(this);
   }
 
+
+  // Метод открытия попапа
   open() {
-    this.setEventListeners();
-    this._popup.classList.add('popup_opened');
+    this._popup.classList.add("popup_opened");
+    document.addEventListener("keydown", this._pressingEscape);
   }
 
-  close() {
-    this._popup.classList.remove('popup_opened');
+
+  // Метод закрытия попапа
+  close(){
+    this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._pressingEscape);
   }
 
-  _handleButtonClose() {
-    this.close();
-  }
 
-  _handleOverlayClose(evt) {
-    if (evt.target === evt.currentTarget) {
+  // Метод закрытия попапа при нажатии на esc
+  _pressingEscape(evt) {
+    if (evt.key === "Escape") {
       this.close();
     }
   }
 
-  _handleEscClose(evt) {
-    if (evt.key === 'Escape') {
-      this.close();
-    }
-  }
 
+  // Метод закрытия попап по клику по фону и кнопке закрытия
   setEventListeners() {
-    this._buttonClose.addEventListener('click', this._boundHandleButtonClose);
-    this._popup.addEventListener('click', this._boundHandleOverlayClose);
-    document.addEventListener('keydown', this._boundHandleEscClose);
+    this._popup.addEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("popup") || evt.target.classList.contains("popup__button-close")) {
+        this.close();
+      }
+    });
   }
-
 }

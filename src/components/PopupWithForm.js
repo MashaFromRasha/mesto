@@ -1,64 +1,77 @@
 // import Popup from './Popup.js';
 
 // export default class PopupWithForm extends Popup {
-//   constructor(popupSelector, submitForm) {
-//     super(popupSelector);
-//     this._form = this._popup.querySelector('.popup__form');
-//     this._handleSubmitForm = submitForm;
-//     this._inputList = this._form.querySelectorAll('.popup__input');
+//   constructor({ submitForm, container }) {
+//     super(container);
+//     this._submitForm = submitForm;
+//     this._formSelector = this._container.querySelector('.popup__form');
 //   }
 
 //   // Метод собирает информацию с полей формы и возвращает объектом
 //   _getInputValues() {
-//     const result = {};
-//     this._inputList.forEach( input => {
-//       result[input.name] = input.value;
+//     this._inputList = this._formSelector.querySelectorAll('.popup__input');
+//     this._formValues = {};
+//     this._inputList.forEach(input => {
+//       this._formValues[input.name] = input.value;
 //     });
 
-//     return result;
-//   }
-
-//   setEventListeners() {
-//     super.setEventListeners();
-//     this._form.addEventListener('submit', (evt) => {
-//       evt.preventDefault();
-//       this._handleSubmitForm( this._getInputValues() );
-//     } 
-//     );
+//     return this._formValues;
 //   }
 
 //   close() {
 //     super.close();
-//     this._form.reset();
+//     this._formSelector.reset();
+//   }
+
+//   setEventListeners() {
+//     super.setEventListeners();
+//     this._formSelector.addEventListener('submit', this._handleSubmitForm);
+//   }
+
+//   // метод описывает функционал события отправки формы
+//   _handleSubmitForm = (evt) => {
+//     evt.preventDefault();
+//     this._submitForm(this._getInputValues());
+//     this.close(this._container);
 //   }
 // }
 
 
-import Popup from "./Popup.js";
+import Popup from './Popup.js';
+
 
 export default class PopupWithForm extends Popup {
-    constructor(selector, handleFormSubmit) {
-        super(selector);
-        this._handleFormSubmit = handleFormSubmit;
-        this._popupForm = this._popup.querySelector('.popup__form');
-    }
+  constructor( { popupSelector, handleSubmit } ) {
+    super(popupSelector);
+    this._popup = document.querySelector(popupSelector);
+    this._form = this._popup.querySelector(".popup__form");
+    this._handleSubmit = handleSubmit;
+    this._inputList = this._form.querySelectorAll(".popup__input");
+  }
 
-    _getInputValues() {
-        const inputs = Array.from(this._popupForm.querySelectorAll('.popup__input'));
-        const inputsObject = {};
-        inputs.forEach(input => inputsObject[input.name] = input.value);
-        return inputsObject;
-    }
 
-    setEventListeners() {
-        super.setEventListeners();
-        this._popupForm.addEventListener('submit', (e) => this._handleFormSubmit(e, this._getInputValues()));
-    }
+  // Метод собирает информацию с полей формы и возвращает объектом
+  _getInputValues() {
+    this._formValues = {};
+    this._inputList.forEach(input => {
+      this._formValues[input.name] = input.value;
+    });
+    
+    return this._formValues;
+  }
 
-    close() {
-        super.close();
-        this._popupForm.reset();
-    }
+  close() {
+    super.close();
+    this._form.reset();
+  }
+
+  setEventListeners() {
+    this._popup.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._handleSubmit(this._getInputValues());
+      this.close();
+    });
+    super.setEventListeners();
+  }
+
 }
-
-
