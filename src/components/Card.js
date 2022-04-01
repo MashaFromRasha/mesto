@@ -44,5 +44,8 @@ export default class Card {
     this._elementImage.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
+    // this._elementImage.addEventListener('click', () => {
+    //   this._handleCardClick({link: this._elementImage.src, name: this._elementImage.textContent});
+    // });
   }
 }

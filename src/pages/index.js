@@ -27,13 +27,11 @@ addPupupValidator.enableValidation();
 
 
 // Создаем экземпляр класса Card
-const createCard = (item) =>
-  new Card(item, "#cards-template", () => handleCardClick(item)).generateCard();
-
-
-function handleCardClick({ name, link }) {
-  popupWithImage.open(name, link);
+function createCard(item) {
+  const card = new Card(item, "#cards-template", popupWithImage.open);
+  return card.generateCard();
 }
+
 
 // Константа, содержащая в себе все карточки
 const cardList = new Section(
@@ -44,11 +42,11 @@ const cardList = new Section(
       cardList.addItem(cardElement);
     },
   },
-  photos
+  '.photos'
 );
 
 
-// Экземпляр формы с картинкой и тектом (отктрытый попап с большой картинкой)
+// Экземпляр формы с картинкой и тектом (открытый попап с большой картинкой)
 const popupWithImage = new PopupWithImage(".popup_blackout");
 
 
