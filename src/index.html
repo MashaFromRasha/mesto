@@ -87,10 +87,13 @@
   <template class = "cards-template" id="cards-template">
     <article class="card">
       <img src="#" class="card__image" alt="картинка">
-      <button class="card__button-remove" type="button" aria-label="удалить картинку"></button>
+      <button class="card__button-remove" type="button" aria-label="Удалить картинку"></button>
       <div class="card__row-block">
         <h2 class="card__title"></h2>
-        <button class="card__button-like" type="button" aria-label="поставить лайк"></button>
+        <div class="card__like-container">
+          <button class="card__button-like" type="button" aria-label="Поставить лайк"></button>
+          <span class="card__score-like">0</span>
+        </div>
       </div>
     </article>
   </template>

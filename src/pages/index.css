@@ -27,8 +27,10 @@
 @import url(../blocks/card/__button-remove/card__button-remove.css);
 @import url(../blocks/card/__row-block/card__row-block.css);
 @import url(../blocks/card/__title/card__title.css);
+@import url(../blocks/card/__like-container/card__like-container.css);
 @import url(../blocks/card/__button-like/card__button-like.css);
 @import url(../blocks/card/__button-like/_active/card__button-lile_active.css);
+@import url(../blocks/card/__score-like/card__score-like.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copy/footer__copy.css);
