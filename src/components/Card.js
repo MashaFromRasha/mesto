@@ -32,15 +32,15 @@ export default class Card {
   // Метод генерирует и возвращает карточку 
   generateCard = () => {
     this._element = this._getTemplate();
-    this._elementImage = this._element.querySelector(".card__image");
-    this._elementTitle = this._element.querySelector(".card__title");
-    this._placeButtonLike = this._element.querySelector(".card__button-like");
-    this._placeButtonRemove = this._element.querySelector(".card__button-remove");
-    this._placeScoreLike = this._element.querySelector(".card__score-like");
+    this._elementImage = this._element.querySelector('.card__image');
+    this._elementTitle = this._element.querySelector('.card__title');
+    this._placeButtonLike = this._element.querySelector('.card__button-like');
+    this._placeButtonRemove = this._element.querySelector('.card__button-remove');
+    this._placeScoreLike = this._element.querySelector('.card__score-like');
 
     this._data.likes.forEach(elem => {
       if (elem._id === this._userId) {
-        this._placeButtonLike.classList.add("card__button-like_active");
+        this._placeButtonLike.classList.add('card__button-like_active');
       }
     });
 
@@ -66,7 +66,7 @@ export default class Card {
 
   // Метод добавляет/удаляет класс на кнопке лайк
   like(quantity) {
-    this._placeButtonLike.classList.toggle("card__button-like_active");
+    this._placeButtonLike.classList.toggle('card__button-like_active');
     this._placeScoreLike.textContent = quantity;
   }  
 

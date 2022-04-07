@@ -7,7 +7,6 @@ export default class Api {
   
   }
 
-
   getInfoUser() {
     return fetch(`${this._address}/${this._groupId}/users/me`, {
       headers: {
@@ -40,7 +39,6 @@ export default class Api {
     })
     .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
   }
-  
   
   addCard(data) {
     return fetch(`${this._address}/${this._groupId}/cards`, {
