@@ -68,7 +68,7 @@ const formAddCard = new PopupWithForm({
         cardsList.setItemUp(cardElement);
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(formAddCard.renderLoading(false));
+      .finally(() => formAddCard.renderLoading(false));
   },
 },
   popupAddCardId
@@ -90,7 +90,7 @@ function removeCard(card) {
       card.deleteCard();
     })
     .catch(err => console.log(`Error: ${err}`))
-    .finally(popupRemoveCard.close());
+    .finally(() => popupRemoveCard.close());
 }
 
 
@@ -201,7 +201,8 @@ const formProfile = new PopupWithForm({
         userInfo.setUserInfo(res);
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(formProfile.renderLoading(false));
+      .finally(() => formProfile.renderLoading(false));
+      
   },
 },
   popupProfileId
@@ -238,7 +239,8 @@ const formProfileAvatar = new PopupWithForm({
         userInfo.setUserInfo(res);
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(formProfile.renderLoading(false));
+      .finally(() => formProfile.renderLoading(false));
+      
   },
 },
   popupEditAvatarId
