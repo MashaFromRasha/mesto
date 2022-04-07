@@ -36,8 +36,11 @@ const userId = {};
 // Экземпляр класса API 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1',
-  token: '65df588a-f3b5-4198-8939-b069c90bb6b0',
-  groupId: 'cohort-39'
+  groupId: 'cohort-39',
+  headers: {
+    authorization: '65df588a-f3b5-4198-8939-b069c90bb6b0',
+    'Content-Type': 'application/json'
+  }
 });
 
 

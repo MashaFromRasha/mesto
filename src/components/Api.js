@@ -1,101 +1,90 @@
 export default class Api {
 
-  constructor({ baseUrl, token, groupId }) {
+  constructor({ baseUrl, groupId, headers }) {
     this._address = baseUrl;
     this._groupId = groupId;
-    this._token = token;
-  
+    this._headers = headers;
   }
+
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
 
   getInfoUser() {
     return fetch(`${this._address}/${this._groupId}/users/me`, {
-      headers: {
-        authorization: this._token
-      }
+        headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
     
   editInfoUser(data) {
     return fetch(`${this._address}/${this._groupId}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data['popup-input-name'],
         about: data['popup-input-status'],
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
   
   getInitialCards() {
     return fetch(`${this._address}/${this._groupId}/cards`, {
-      headers: {
-        authorization: this._token
-      }
+        headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
   
   addCard(data) {
     return fetch(`${this._address}/${this._groupId}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data['popup-input-place-name'],
         link: data['popup-input-url']
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
   
   removeCard(id) {
     return fetch(`${this._address}/${this._groupId}/cards/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token,
-      }
+      headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
   
   addLike(id) {
     return fetch(`${this._address}/${this._groupId}/cards/likes/${id}`, {
       method: 'PUT',
-      headers: {
-        authorization: this._token,
-      }
+      headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
   
   removeLike(id) {
     return fetch(`${this._address}/${this._groupId}/cards/likes/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token,
-      }
+      headers: this._headers,
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
   
   editUserAvatar(data) {
     return fetch(`${this._address}/${this._groupId}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data['popup-input-url-avatar'],
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`));
+    .then(this._checkResponse);
   }
 }
