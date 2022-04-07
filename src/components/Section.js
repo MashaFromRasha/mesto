@@ -1,20 +1,21 @@
-
-// Класс Section отвечает за отрисовку элементов на странице
-
 export default class Section {
-  constructor({ items, renderer }, container) {
-    this._renderedItems = items;
+  constructor({ renderer }, container) {
     this._renderer = renderer;
-    this._container = document.querySelector(container);
+    this._container = document.querySelector(`${container}`);
   }
-  
+
   // Метод отвечает за отрисовку всех элементов
-  renderItems() {
-    this._renderedItems.forEach(element => this._renderer(element));
+  renderItems(items) {
+    items.forEach(item => {
+      this._renderer(item);
+    });
   }
-  
-  // Метод принимает DOM-элемент и добавляет его в контейнер
-  addItem(element) {
+  // Метод добавляет элементы в контейнер на страницу
+  setItem(element) {
+    this._container.append(element);
+  }
+
+  setItemUp(element) {
     this._container.prepend(element);
   }
 }
