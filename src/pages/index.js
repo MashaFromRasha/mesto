@@ -50,7 +50,7 @@ const api = new Api({
 // Константа, содержащая в себе все карточки
 const cardsList = new Section({
   renderer: (item) => {
-    const cardElement = creatureCard(item).generateCard();
+    const cardElement = createCard(item).generateCard();
     cardsList.setItem(cardElement);
   },
 },
@@ -64,21 +64,28 @@ const formAddCard = new PopupWithForm({
     formAddCard.renderLoading(true);
     api.addCard(formData)
       .then((res) => {
-        const cardElement = creatureCard(res).generateCard();
+        const cardElement = createCard(res).generateCard();
         cardsList.setItemUp(cardElement);
+        formAddCard.close();
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => formAddCard.renderLoading(false));
+      .finally(() => {
+        formAddCard.renderLoading(false);
+      });
   },
 },
   popupAddCardId
 );
 
 
-// Прием объекта по Апи с сервера, отрисовка на сайте
-api.getInitialCards()
-  .then(res => {
-    cardsList.renderItems(res);
+// Прием информации о пользователе + объекта по Апи с сервера и публикация на странице
+
+Promise.all([api.getInfoUser(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData);
+    userId.id = userData._id;
+
+    cardsList.renderItems(cards);
   })
   .catch(err => console.log(`Error: ${err}`));
 
@@ -88,9 +95,9 @@ function removeCard(card) {
   api.removeCard(card._id)
     .then((res) => {
       card.deleteCard();
+      popupRemoveCard.close();
     })
-    .catch(err => console.log(`Error: ${err}`))
-    .finally(() => popupRemoveCard.close());
+    .catch(err => console.log(`Error: ${err}`));
 }
 
 
@@ -123,7 +130,7 @@ function removeLike(card) {
 
 
 // Функция, создающая экземпляр класса Card
-function creatureCard(item) {
+function createCard(item) {
   const card = new Card({
     data: item,
     handleCardClick: (name, link) => {
@@ -132,13 +139,22 @@ function creatureCard(item) {
     removeClickHandler: () => {
       popupRemoveCard.open(card);
     },
-    likeClickHandler: (evt) => {
-      if (!evt.target.classList.contains("card__button-like_active")) {
+    // likeClickHandler: (evt) => {
+    //   if (!evt.target.classList.contains("card__button-like_active")) {
+    //     addLike(card);
+    //   } else {
+    //     removeLike(card);
+    //   }
+    // },
+
+    likeClickHandler: () => {
+      if (!card.isLiked()) {
         addLike(card);
       } else {
         removeLike(card);
       }
     },
+
     currentUserId: userId.id
   }, '.cards-template');
 
@@ -183,13 +199,7 @@ const userInfo = new UserInfo({
 });
 
 
-// Прием информации о пользователе и публикация на странице
-api.getInfoUser()
-  .then(res => {
-    userId.id = res._id;
-    userInfo.setUserInfo(res);
-  })
-  .catch(err => console.log(`Error: ${err}`));
+
 
 
 // Экземпляр класса с попапом редактирования информации о юзере
@@ -199,9 +209,12 @@ const formProfile = new PopupWithForm({
     api.editInfoUser(formData)
       .then((res) => {
         userInfo.setUserInfo(res);
+        formProfile.close();
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => formProfile.renderLoading(false));
+      .finally(() => {
+        formProfile.renderLoading(false);
+      });
       
   },
 },
@@ -233,13 +246,16 @@ editPopupValidator.enableValidation();
 // Экземпляр попапа для смены аватара
 const formProfileAvatar = new PopupWithForm({
   submitForm: (formData) => {
-    formProfile.renderLoading(true);
+    formProfileAvatar.renderLoading(true);
     api.editUserAvatar(formData)
       .then((res) => {
         userInfo.setUserInfo(res);
+        formProfileAvatar.close();
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => formProfile.renderLoading(false));
+      .finally(() => {
+        formProfileAvatar.renderLoading(false);
+      });
       
   },
 },

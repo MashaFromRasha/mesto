@@ -65,7 +65,6 @@ export default class FormValidator {
     // Вешаем слушатель на сабытие отправки формы
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault(); // убираем дефолтное поведение кнопки отправить форму
-      this._disabledButton(this._submitButton, this._settings);
     });
 
     this._setButtonState(this._submitButton, this._form.checkValidity(), this._settings); // определяем стартовое состояние кропки

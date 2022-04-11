@@ -70,6 +70,10 @@ export default class Card {
     this._placeScoreLike.textContent = quantity;
   }  
 
+  isLiked() {
+    return this._data.likes.filter((item) => {return item._id === this._userId}).length > 0;
+  }
+
   // Метод вешает слушатели событий
   _setEventListeners = () => {
     this._placeButtonRemove.addEventListener('click', this._removeClickHandler);
