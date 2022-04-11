@@ -71,7 +71,7 @@ export default class Card {
   }  
 
   isLiked() {
-    return this._data.likes.filter((item) => {return item._id === this._userId}).length > 0;
+
   }
 
   // Метод вешает слушатели событий
