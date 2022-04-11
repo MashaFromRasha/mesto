@@ -71,7 +71,9 @@ export default class Card {
   }  
 
   isLiked() {
-
+    if (this._placeButtonLike.classList.contains("card__button-like_active")) {
+      return true;
+    }
   }
 
   // Метод вешает слушатели событий

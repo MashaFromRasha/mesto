@@ -2,6 +2,8 @@ export default class FormValidator {
   constructor(settings, form) {
     this._settings = settings;
     this._form = form;
+    this._inputsList = this._form.querySelectorAll(this._settings.inputSelector); // Ищем в DOM все поля ввода
+    this._submitButton = this._form.querySelector(this._settings.submitButtonSelector); // выбираем в DOM кнопку формы
   }
 
   // Функция показа ошибки
@@ -58,8 +60,6 @@ export default class FormValidator {
 
   // Публичная функция запуска валидации
   enableValidation = () => {
-    this._inputsList = this._form.querySelectorAll(this._settings.inputSelector); // Ищем в DOM все поля ввода
-    this._submitButton = this._form.querySelector(this._settings.submitButtonSelector); // выбираем в DOM кнопку формы
     this._setEventListeners(this._form, this._settings, this._submitButton);
 
     // Вешаем слушатель на сабытие отправки формы
@@ -67,6 +67,6 @@ export default class FormValidator {
       evt.preventDefault(); // убираем дефолтное поведение кнопки отправить форму
     });
 
-    this._setButtonState(this._submitButton, this._form.checkValidity(), this._settings); // определяем стартовое состояние кропки
+    this._setButtonState(this._submitButton, this._form.checkValidity(), this._settings); // определяем стартовое состояние кнопки
   };  
 };

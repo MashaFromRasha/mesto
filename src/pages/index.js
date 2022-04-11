@@ -69,9 +69,7 @@ const formAddCard = new PopupWithForm({
         formAddCard.close();
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => {
-        formAddCard.renderLoading(false);
-      });
+      .finally(() => formAddCard.renderLoading(false));
   },
 },
   popupAddCardId
@@ -139,13 +137,7 @@ function createCard(item) {
     removeClickHandler: () => {
       popupRemoveCard.open(card);
     },
-    // likeClickHandler: (evt) => {
-    //   if (!evt.target.classList.contains("card__button-like_active")) {
-    //     addLike(card);
-    //   } else {
-    //     removeLike(card);
-    //   }
-    // },
+
 
     likeClickHandler: () => {
       if (!card.isLiked()) {
@@ -199,9 +191,6 @@ const userInfo = new UserInfo({
 });
 
 
-
-
-
 // Экземпляр класса с попапом редактирования информации о юзере
 const formProfile = new PopupWithForm({
   submitForm: (formData) => {
@@ -212,10 +201,7 @@ const formProfile = new PopupWithForm({
         formProfile.close();
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => {
-        formProfile.renderLoading(false);
-      });
-      
+      .finally(() => formProfile.renderLoading(false));
   },
 },
   popupProfileId
@@ -253,10 +239,7 @@ const formProfileAvatar = new PopupWithForm({
         formProfileAvatar.close();
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => {
-        formProfileAvatar.renderLoading(false);
-      });
-      
+      .finally(() => formProfileAvatar.renderLoading(false));    
   },
 },
   popupEditAvatarId
