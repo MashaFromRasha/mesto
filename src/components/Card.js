@@ -30,7 +30,7 @@ export default class Card {
   }
 
   // Метод генерирует и возвращает карточку 
-  generateCard = () => {
+  generateCard() {
     this._element = this._getTemplate();
     this._elementImage = this._element.querySelector('.card__image');
     this._elementTitle = this._element.querySelector('.card__title');
@@ -52,11 +52,11 @@ export default class Card {
 
     this._elementTitle.textContent = this._name;
     this._elementImage.src = this._link;
-    this._elementImage.alt = 'Фотография местности ' + this._name;
+    this._elementImage.alt = 'Фотография ' + this._name;
     this._placeScoreLike.textContent = this._scoreLike;
 
     return this._element;
-  };
+  }
 
   // Метод удаляет карточку из DOM
   deleteCard() {
@@ -77,11 +77,11 @@ export default class Card {
   }
 
   // Метод вешает слушатели событий
-  _setEventListeners = () => {
+  _setEventListeners() {
     this._placeButtonRemove.addEventListener('click', this._removeClickHandler);
     this._placeButtonLike.addEventListener('click', this._likeClickHandler);
     this._elementImage.addEventListener('click', () => {
-      this._handleCardClick(this._name, this._link)
+      this._handleCardClick(this._name, this._link);
     });
-  };
-};
+  }
+}

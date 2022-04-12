@@ -1,72 +1,83 @@
 export default class FormValidator {
   constructor(settings, form) {
-    this._settings = settings;
+    this._inputSelector = settings.inputSelector;
+    this._submitButtonSelector = settings.submitButtonSelector;
+    this._buttonInvalidClass = settings.buttonInvalidClass;
+    this._inputInvalidClass = settings.inputInvalidClass;
+    
     this._form = form;
-    this._inputsList = this._form.querySelectorAll(this._settings.inputSelector); // Ищем в DOM все поля ввода
-    this._submitButton = this._form.querySelector(this._settings.submitButtonSelector); // выбираем в DOM кнопку формы
+    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector)); // Ищем в DOM все поля ввода
+    this._submitButton = this._form.querySelector(this._submitButtonSelector); // выбираем в DOM кнопку формы
   }
 
   // Функция показа ошибки
-  _showError = (form, input, settings) => {
-    const error = form.querySelector(`#${input.name}-error`); // Ищем в DOM поле ошибки по name
-    error.textContent = input.validationMessage; // Текст ошибки равен дефолтному значению ошибок браузера
-    input.classList.add(settings.inputInvalidClass); // Добавляем класс невалидного инпута
-  }  
+  _showError(inputElement) {
+    const errorElement = this._form.querySelector(`#${inputElement.name}-error`); // Ищем в DOM поле ошибки по name
+    errorElement.textContent = inputElement.validationMessage; // Текст ошибки равен дефолтному значению ошибок браузера
+    inputElement.classList.add(this._inputInvalidClass); // Добавляем класс невалидного инпута
+  }
 
   // Функция, убирающая показ ошибки
-  _hideError = (form, input, settings) => {
-    const error = form.querySelector(`#${input.name}-error`); // Ищем в DOM поле ошибки по Name
-    error.textContent = ''; // Убираем текст ошибки
-    input.classList.remove(settings.inputInvalidClass); // Удаляем класс невалидного инпута
-  };
+  _hideError(inputElement) {
+    const errorElement = this._form.querySelector(`#${inputElement.name}-error`);
+    errorElement.textContent = '';
+    inputElement.classList.remove(this._inputInvalidClass);
+  }
+
+  // Функция, показывающая и скрывающая ошибки ввода
+  _checkInputValidity(inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showError(inputElement);
+    } else {
+      this._hideError(inputElement);
+    }
+  }
+
+  // Функция, проверяющая, есть ли хоть одна ошибка в поле ввода формы
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    });
+  }
 
   // Фунция проверки состояния кнопки форм
-  _setButtonState = (button, isActive, settings) => {
-    // Если кнопка активна убираем класс и состояние, и наоборот
-    if (isActive) {
-      button.classList.remove(settings.buttonInvalidClass);
-      button.disabled = false;
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._submitButton.classList.add(this._buttonInvalidClass);
+      this._submitButton.setAttribute('disabled', '');
     } else {
-      this._disabledButton(button, settings);
+      this._submitButton.classList.remove(this._buttonInvalidClass);
+      this._submitButton.removeAttribute('disabled');
     }
-  };
+  } 
+  
+  // Функция вешает слушатели событий на поля ввода и кнопки в указанной форме
+  _setEventListeners() {
+    this._toggleButtonState();
 
-  // Функция дизейбла кнопки
-  _disabledButton = (button, settings) => {
-    button.classList.add(settings.buttonInvalidClass);
-    button.disabled = true;
-  };
-
-  // Функция, проверяющая валидность поля ввода
-  _checkInputValidity = (form, input, settings) => {
-    // проверяем если не валидно запускаем показ ошибки, если валидно убираем
-    if (!input.validity.valid) {
-      this._showError(form, input, settings);
-    } else {
-      this._hideError(form, input, settings);
-    }
-  };
-
-  // Функция вешает слушатели событий на поля ввода и кнопки в указаной форме
-  _setEventListeners = (form, settings, button) => {
-    // обходим все поля ввода и вешаем на них слушатели
-    this._inputsList.forEach((input) => {
-      input.addEventListener('input', () => {
-        this._checkInputValidity(form, input, settings); // проверям валидность формы
-        this._setButtonState(button, form.checkValidity(), settings); // проверяем состояние кнопки
+    this._inputList.forEach((inputElement) => {
+      inputElement.addEventListener('input', () => {
+        this._checkInputValidity(inputElement);
+        this._toggleButtonState();
       });
     });
-  };
+  }
 
   // Публичная функция запуска валидации
-  enableValidation = () => {
-    this._setEventListeners(this._form, this._settings, this._submitButton);
+  enableValidation() {
+    this._setEventListeners();
 
-    // Вешаем слушатель на сабытие отправки формы
     this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault(); // убираем дефолтное поведение кнопки отправить форму
+      evt.preventDefault();
     });
+  }  
 
-    this._setButtonState(this._submitButton, this._form.checkValidity(), this._settings); // определяем стартовое состояние кнопки
-  };  
-};
+  // Публичная функция сброса валидации (текст и кнопка)
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideError(inputElement);
+    });
+  
+    this._toggleButtonState();
+  }  
+}

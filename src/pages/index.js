@@ -163,6 +163,7 @@ popupImage.setEventListeners();
 
 // Отслеживаем событие клика кнопки "Добавить карточку" 
 profileAddButton.addEventListener('click', () => {
+  validatorAdd.resetValidation();
   formAddCard.open();
   });
 
@@ -175,9 +176,9 @@ formAddCard.setEventListeners();
 popupRemoveCard.setEventListeners();
 
 
-// Валидация формы добавления новой карточки
-const addPopupValidator = new FormValidator(validationConfig, popupFormAdd);
-addPopupValidator.enableValidation();
+// // Валидация формы добавления новой карточки
+const validatorAdd = new FormValidator(validationConfig, popupFormAdd);
+validatorAdd.enableValidation();
 
 
 // ________________Обновление информации о юзере____________________
@@ -208,11 +209,14 @@ const formProfile = new PopupWithForm({
 );
 
 
-// Отслеживаем событие клика кнопки "редактировать" 
+// Отслеживаем событие клика кнопки "редактировать профиль" 
 profileEditButton.addEventListener('click', () => {
+  validatorEdit.resetValidation();
+
   const dataUserInfo = userInfo.getUserInfo();
   popupNameField.value = dataUserInfo.name;
   popupStatusField.value = dataUserInfo.about;
+
   formProfile.open();
 });
 
@@ -222,8 +226,8 @@ formProfile.setEventListeners();
 
 
 // Валидация формы инфы о юзере
-const editPopupValidator = new FormValidator(validationConfig, popupFormEdit);
-editPopupValidator.enableValidation();
+const validatorEdit = new FormValidator(validationConfig, popupFormEdit);
+validatorEdit.enableValidation();
 
 
 // ________________Обновление аватара профиля____________________
@@ -248,6 +252,7 @@ const formProfileAvatar = new PopupWithForm({
 
 // Отслеживаем событие клика на аватарку
 profileAvatarButton.addEventListener('click', () => {
+  validatorAvatar.resetValidation();
   formProfileAvatar.open();
 });
 
@@ -256,6 +261,6 @@ profileAvatarButton.addEventListener('click', () => {
 formProfileAvatar.setEventListeners();
 
 
-// Валидация формы смены аватара
-const addAvatarPopupValidator = new FormValidator(validationConfig, popupFormAddAvatarContainer);
-addAvatarPopupValidator.enableValidation();
+// // Валидация формы смены аватара
+const validatorAvatar = new FormValidator(validationConfig, popupFormAddAvatarContainer);
+validatorAvatar.enableValidation();
